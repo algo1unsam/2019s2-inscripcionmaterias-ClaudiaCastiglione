@@ -1,4 +1,6 @@
 import materias.*
+import carreras.*
+
 class Alumno {
 	var carrerasInscripto = []
 	var materiasAprobadas = []
@@ -9,16 +11,16 @@ class Alumno {
 	method puedeCursar(unaMateria) {}
 	
 	method tieneAprobada(unaMateria) {
-		return materiasAprobadas.any(materia => materia == unaMateria)
+		return materiasAprobadas.any({materia => (materia == unaMateria)})
 	}
 	
 	method estaInscripto(unaMateria) {
-		return materiasInscripto.any(materia => materia == unaMateria)
+		return materiasInscripto.any({materia => (materia == unaMateria)})
 	}
 	
 	method tieneAprobadoAnioAnterior(unAnio, carrera) {
 		var materiasDelAnio = materiasAprobadas.filter({m => m.esDelAnio(unAnio)})
-		return carrera.cantMateriasDelAnio(unAnio).size() == materiasDelAnio.size()
+		return (carrera.cantMateriasDelAnio(unAnio) == materiasDelAnio.size())
 	}
 	
 }

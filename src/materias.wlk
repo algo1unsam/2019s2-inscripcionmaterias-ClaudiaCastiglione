@@ -1,4 +1,6 @@
 import alumnos.*
+import carreras.*
+
 class Materia {
 	var property carrera
 	var alumnosInscriptos = []
@@ -10,7 +12,7 @@ class Materia {
 	
 	method inscribir(unAlumno) {
 		if (self.sePuedeInscribir(unAlumno)&& self.hayCupo()) alumnosInscriptos.add(unAlumno)
-		if (self.sePuedeInscribir(unAlumno) && not self.hayCupo() alumnosEnListaEspera.add(unAlumno)
+		if (self.sePuedeInscribir(unAlumno) && not self.hayCupo()) alumnosEnListaEspera.add(unAlumno)
 			else self.error("No se puede inscribir a este alumno en esta materia")
 	}
 	
@@ -22,14 +24,24 @@ class Materia {
 	}
 	
 	method sePuedeInscribir(unAlumno) {
+		return ((self.tieneCreditosSuficientes(unAlumno) && self.tieneAprobadoAnioAnterior(unAlumno) && self.tieneAprobadasCorrelativas(unAlumno))
 		
 	}
 	
 	method tieneCreditosSuficientes(unAlumno) {
 		return self.creditosNecesarios() == unAlumno.creditos()
 	}
+	
 	method esDelAnio(unAnio) {
-		return anio ==
+		return (anio == unAnio)
+	}
+	
+	method esDeLaCarrera(unaCarrera) {
+		return (carrera == unaCarrera)
+	}
+	
+	method hayCupo(){
+		return cupo == alumnosInscriptos.size()
 	}
 	
 	
@@ -37,8 +49,8 @@ class Materia {
 		return unAlumno.tieneAprobadoAnioAnterior(anio-1, carrera)
 	}
 	
-	method tieneAprobadaCorrelativas(unAlumno) {
-		return correlativas 
+	method tieneAprobadasCorrelativas(unAlumno) {
+		return correlativas.all({materia => unAlumno.materiasAprobadas().contains(materia)}) 
 	}
 	
 }
