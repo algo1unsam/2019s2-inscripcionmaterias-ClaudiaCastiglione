@@ -4,7 +4,7 @@ class Alumno {
 	var materiasAprobadas = []
 	var materiasInscripto = []
 	var materiasCondicional = []
-	var property creditos
+	var property creditos = 0
 	
 	method puedeCursar(unaMateria) {}
 	
@@ -14,6 +14,11 @@ class Alumno {
 	
 	method estaInscripto(unaMateria) {
 		return materiasInscripto.any(materia => materia == unaMateria)
+	}
+	
+	method tieneAprobadoAnioAnterior(unAnio, carrera) {
+		var materiasDelAnio = materiasAprobadas.filter({m => m.esDelAnio(unAnio)})
+		return carrera.cantMateriasDelAnio(unAnio).size() == materiasDelAnio.size()
 	}
 	
 }
