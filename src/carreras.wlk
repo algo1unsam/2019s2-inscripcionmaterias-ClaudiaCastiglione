@@ -1,5 +1,7 @@
 import materias.*
 import alumnos.*
+import requisitos.*
+
 class Carrera {
 	var property materias = []
 	

@@ -1,12 +1,14 @@
 import alumnos.*
 import carreras.*
+import requisitos.*
 
 class Materia {
 	var property carrera
+	var property requisito = requisitoNada
 	var alumnosInscriptos = []
 	var alumnosEnListaEspera = []
-	var property correlativas = []
-	var property creditosNecesarios = 0
+//	var property correlativas = []
+//	var property creditosNecesarios = 0
 	var property anio 
 	var property cupo 
 	
@@ -24,12 +26,16 @@ class Materia {
 	}
 	
 	method sePuedeInscribir(unAlumno) {
-		return ((self.tieneCreditosSuficientes(unAlumno) && self.tieneAprobadoAnioAnterior(unAlumno) && self.tieneAprobadasCorrelativas(unAlumno))
+		return requisito.cumpleRequisito(unAlumno)
 		
 	}
 	
-	method tieneCreditosSuficientes(unAlumno) {
-		return self.creditosNecesarios() == unAlumno.creditos()
+	method yaEstaInscripto(unAlumno) {
+		return alumnosInscriptos.any({alumno => alumno == unAlumno})
+	}
+	
+//	method tieneCreditosSuficientes(unAlumno) {
+//		return self.creditosNecesarios() == unAlumno.creditos()
 	}
 	
 	method esDelAnio(unAnio) {
@@ -45,22 +51,20 @@ class Materia {
 	}
 	
 	
-	method tieneAprobadoAnioAnterior(unAlumno) {
-		return unAlumno.tieneAprobadoAnioAnterior(anio-1, carrera)
-	}
+//	method tieneAprobadoAnioAnterior(unAlumno) {
+//		return unAlumno.tieneAprobadoAnioAnterior(anio-1, carrera)
+//	}
 	
-	method tieneAprobadasCorrelativas(unAlumno) {
-		return correlativas.all({materia => unAlumno.materiasAprobadas().contains(materia)}) 
-	}
-	
-}
-	
-	
-	
-	
-	
-	method hayCupo() {
-		return alumnosInscriptos.size()
-	}
+//	method tieneAprobadasCorrelativas(unAlumno) {
+//		return correlativas.all({materia => unAlumno.materiasAprobadas().contains(materia)}) 
+//	}
 	
 }
+	
+	
+	
+	
+	
+
+	
+

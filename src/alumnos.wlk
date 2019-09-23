@@ -1,5 +1,6 @@
 import materias.*
 import carreras.*
+import requisitos.*
 
 class Alumno {
 	var carrerasInscripto = []
