@@ -22,11 +22,14 @@ class Materia {
 		if (not unAlumno.estaInscripto(self)){
 			self.error("Este alumno no esta inscripto en esta materia")
 		}
-		else alumnosInscriptos.remove(unAlumno)
+		else {
+			alumnosInscriptos.remove(unAlumno)
+			if(self.hayAlumnosEnEspera()) alumnosInscriptos.add(alumnosEnListaEspera.first())
+			}
 	}
 	
 	method sePuedeInscribir(unAlumno) {
-		return requisito.cumpleRequisito(unAlumno)
+		return (requisito.cumpleRequisito(unAlumno) && not self.yaEstaInscripto(unAlumno) && not unAlumno.tieneAprobada(self))
 		
 	}
 	
@@ -36,7 +39,8 @@ class Materia {
 	
 //	method tieneCreditosSuficientes(unAlumno) {
 //		return self.creditosNecesarios() == unAlumno.creditos()
-	}
+//	}
+	method hayAlumnosEnEspera() = (alumnosEnListaEspera.size() > 0)
 	
 	method esDelAnio(unAnio) {
 		return (anio == unAnio)
@@ -47,7 +51,7 @@ class Materia {
 	}
 	
 	method hayCupo(){
-		return cupo == alumnosInscriptos.size()
+		return (cupo == alumnosInscriptos.size())
 	}
 	
 	
