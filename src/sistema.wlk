@@ -13,7 +13,7 @@ object sistema {
 		unAlumno.materiasAprobadas().add(unaMateria)
 	}
 	
-	method notaDelEstudianteEnLaMateria(unaMateria, unAlumno) {
+	method notaDelEstudianteEnLaMateria(unAlumno, unaMateria) {
 		 var nota = registros.find({registro => ((registro.alumno() == unAlumno) && (registro.materia() == unaMateria))}).nota()
 		 if (nota == null) {
 		 	self.error("El alumno no tiene esta materia aprobada")

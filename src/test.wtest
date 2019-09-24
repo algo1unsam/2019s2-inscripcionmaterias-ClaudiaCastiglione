@@ -1,0 +1,18 @@
+import alumnos.*
+import carreras.*
+import materias.*
+import sistema.*
+import requisitos.*
+import registros.*
+
+test "si un alumno se quiere inscribir en una materia que ya aprobo se rechaza" {
+	var juan = new Alumno()
+	var ingenieria  = new Carrera()
+	var algoritmos = new Materia(carrera = ingenieria, cupo = 50, anio = 0)
+
+	sistema.registrar(juan, algoritmos, 7)
+	
+
+	assert.throwsExceptionWithMessage("No se puede inscribir a este alumno en esta materia", {algoritmos.inscribir(juan)})
+
+}
