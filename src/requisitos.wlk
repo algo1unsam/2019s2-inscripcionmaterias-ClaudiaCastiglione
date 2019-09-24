@@ -32,9 +32,6 @@ object requisitoCorrelativas {
 
 object requisitoAnioAnteriorAprobado {
 
-	var anio = materia.anio()
-	var carrera = materia.carrera()
-
 	method cumpleRequisito(unAlumno) {
 		return self.tieneAprobadoAnioAnterior(unAlumno)
 	}
@@ -47,7 +44,9 @@ object requisitoAnioAnteriorAprobado {
 
 object requisitoNada {
 
-	method cumpleRequisito(unAlumno) = true
+	method cumpleRequisito(unAlumno) {
+		return true
+	} 
 
 }
 
