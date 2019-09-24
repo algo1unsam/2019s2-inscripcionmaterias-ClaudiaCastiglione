@@ -16,3 +16,16 @@ test "si un alumno se quiere inscribir en una materia que ya aprobo se rechaza" 
 	assert.throwsExceptionWithMessage("No se puede inscribir a este alumno en esta materia", {algoritmos.inscribir(juan)})
 
 }
+
+test "si un alumno se quiere inscribir a una materia y le falta una correlativa se rechaza" {
+	var juan = new Alumno()
+	var ingenieria  = new Carrera()
+	var matematica = new Materia(carrera = ingenieria, cupo = 50, anio = 0)
+	var algoritmos = new Materia(carrera = ingenieria, cupo = 50, anio = 0)
+	var algoritmos2 = new Materia(carrera = ingenieria, cupo = 50, anio = 1, requisito = requisitoCorrelativas)
+	
+	sistema.registrar(juan, algoritmos, 7)
+	requisitoCorrelativas.correlativas().add(matematica)
+	requisitoCorrelativas.correlativas().add(algoritmos)
+	assert.throwsExceptionWithMessage("No se puede inscribir a este alumno en esta materia", {algoritmos2.inscribir(juan)})
+}
