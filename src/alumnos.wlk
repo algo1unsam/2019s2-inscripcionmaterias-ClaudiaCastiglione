@@ -1,6 +1,8 @@
 import materias.*
 import carreras.*
 import requisitos.*
+import sistema.*
+import registros.*
 
 class Alumno {
 
@@ -39,11 +41,19 @@ class Alumno {
 	method materiasInscripto() {
 		return materiasInscripto
 	}
+	
+	method materiasAprobadas() {
+		return materiasAprobadas
+	}
 
 	method listarMateriasQuePuedeCursar(carrera) {
 		if (self.estaInscriptoEnCarrera(carrera)) {
 			materiasQuePuedeCursar = carrera.materias().filter({ materia => self.puedeCursar(materia) })
 		} else self.error("No esta inscripto en " + carrera.toString())
+	}
+	
+	method notaEnLaMateria(unaMateria) {
+		return sistema.notaDelEstudianteEnLaMateria(unaMateria, self)
 	}
 
 }
