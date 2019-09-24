@@ -6,9 +6,11 @@ import requisitos.*
 import registros.*
 
 test "si un alumno se quiere inscribir en una materia que ya aprobo se rechaza" {
-	var juan = new Alumno()
 	var ingenieria  = new Carrera()
 	var algoritmos = new Materia(carrera = ingenieria, cupo = 50, anio = 0)
+	ingenieria.materias().add(algoritmos)
+	var juan = new Alumno(carrerasInscripto = [ingenieria])
+	
 
 	sistema.registrar(juan, algoritmos, 7)
 	
@@ -18,14 +20,87 @@ test "si un alumno se quiere inscribir en una materia que ya aprobo se rechaza" 
 }
 
 test "si un alumno se quiere inscribir a una materia y le falta una correlativa se rechaza" {
-	var juan = new Alumno()
+	
 	var ingenieria  = new Carrera()
 	var matematica = new Materia(carrera = ingenieria, cupo = 50, anio = 0)
 	var algoritmos = new Materia(carrera = ingenieria, cupo = 50, anio = 0)
 	var algoritmos2 = new Materia(carrera = ingenieria, cupo = 50, anio = 1, requisito = requisitoCorrelativas)
-	
+	ingenieria.materias().add(matematica)
+	ingenieria.materias().add(algoritmos)
+	ingenieria.materias().add(algoritmos2)
+	var juan = new Alumno(carrerasInscripto = [ingenieria])
 	sistema.registrar(juan, algoritmos, 7)
 	requisitoCorrelativas.correlativas().add(matematica)
 	requisitoCorrelativas.correlativas().add(algoritmos)
 	assert.throwsExceptionWithMessage("No se puede inscribir a este alumno en esta materia", {algoritmos2.inscribir(juan)})
+}
+
+test "si un alumno se quiere inscribir y cumple los requisitos, pero no hay cupo la lista de espera deja de estar vacia" {
+	
+	var ingenieria  = new Carrera()
+	var matematica = new Materia(carrera = ingenieria, cupo = 5, anio = 0)
+	ingenieria.materias().add(matematica)
+	var juan = new Alumno(carrerasInscripto = ingenieria)
+	var jose = new Alumno(carrerasInscripto = ingenieria)
+	var ana = new Alumno(carrerasInscripto = ingenieria)
+	var juli = new Alumno(carrerasInscripto = ingenieria)
+	var nacho = new Alumno(carrerasInscripto = ingenieria)
+	var clau = new Alumno(carrerasInscripto = ingenieria)
+	
+	matematica.inscribir(juan)
+	matematica.inscribir(jose)
+	matematica.inscribir(ana)
+	matematica.inscribir(juli)
+	matematica.inscribir(nacho)
+	matematica.inscribir(clau)
+	
+	assert.that(matematica.hayAlumnosEnEspera())
+	
+	
+}
+
+test "si un alumno se quiere inscribir y cumple los requisitos, pero no hay cupo esa materia aparece en su lista de condicionales" {
+	
+	var ingenieria  = new Carrera()
+	var matematica = new Materia(carrera = ingenieria, cupo = 5, anio = 0)
+	var juan = new Alumno(carrerasInscripto = ingenieria)
+	var jose = new Alumno(carrerasInscripto = ingenieria)
+	var ana = new Alumno(carrerasInscripto = ingenieria)
+	var juli = new Alumno(carrerasInscripto = ingenieria)
+	var nacho = new Alumno(carrerasInscripto = ingenieria)
+	var clau = new Alumno(carrerasInscripto = ingenieria)
+	
+	matematica.inscribir(juan)
+	matematica.inscribir(jose)
+	matematica.inscribir(ana)
+	matematica.inscribir(juli)
+	matematica.inscribir(nacho)
+	matematica.inscribir(clau)
+	
+	assert.equals(clau.materiasCondicional(), [matematica])
+	
+	
+}
+
+test "si un alumno se quiere inscribir y cumple los requisitos, pero no hay cupo se lo pone en lista de espera" {
+	var ingenieria  = new Carrera()
+	var juan = new Alumno(carrerasInscripto = ingenieria)
+	/*var jose = new Alumno()
+	var ana = new Alumno()
+	var juli = new Alumno()
+	var nacho = new Alumno()
+	var clau = new Alumno()*/
+	
+	var matematica = new Materia(carrera = ingenieria, cupo = 5, anio = 0)
+	
+	matematica.inscribir(juan)
+	/*matematica.inscribir(jose)
+	matematica.inscribir(ana)
+	matematica.inscribir(juli)
+	matematica.inscribir(nacho)
+	matematica.inscribir(clau)*/
+	
+	assert.equals(matematica.alumnosInscriptos(), [juan])
+	
+	
 }

@@ -31,7 +31,7 @@ class Alumno {
 	}
 
 	method estaInscriptoEnCarrera(unaCarrera) {
-		return carrerasInscripto.any({ carrera => (carrera == unaCarrera) })
+		return self.carrerasInscripto().any({ carrera => (carrera == unaCarrera) })
 	}
 	
 	method materiasCondicional() {
@@ -44,6 +44,10 @@ class Alumno {
 	
 	method materiasAprobadas() {
 		return materiasAprobadas
+	}
+	
+	method carrerasInscripto() {
+		return carrerasInscripto
 	}
 
 	method listarMateriasQuePuedeCursar(carrera) {

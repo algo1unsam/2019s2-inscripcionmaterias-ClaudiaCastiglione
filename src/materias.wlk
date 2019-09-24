@@ -1,6 +1,8 @@
 import alumnos.*
 import carreras.*
 import requisitos.*
+import sistema.*
+import registros.*
 
 class Materia {
 
@@ -13,15 +15,23 @@ class Materia {
 	var property anio
 	var property cupo
 
+	method alumnosInscriptos() {
+		return alumnosInscriptos
+	}
+	method alumnosEnListaEspera() {
+		return alumnosEnListaEspera
+	}
+	
 	method inscribir(unAlumno) {
 		if (self.sePuedeInscribir(unAlumno) && self.hayCupo()) {
-			alumnosInscriptos.add(unAlumno)
+			self.alumnosInscriptos().add(unAlumno)
 			unAlumno.materiasInscripto().add(self)
 		}
 		if (self.sePuedeInscribir(unAlumno) && not self.hayCupo()) {
-			alumnosEnListaEspera.add(unAlumno)
+			self.alumnosEnListaEspera().add(unAlumno)
 			unAlumno.materiasCondicional().add(self)
-		} else self.error("No se puede inscribir a este alumno en esta materia")
+		} 
+		else self.error("No se puede inscribir a este alumno en esta materia")
 	}
 
 	method darDeBaja(unAlumno) {
@@ -34,7 +44,7 @@ class Materia {
 	}
 
 	method sePuedeInscribir(unAlumno) {
-		return (requisito.cumpleRequisito(unAlumno) && not self.yaEstaInscripto(unAlumno) && not unAlumno.tieneAprobada(self))
+		return (requisito.cumpleRequisito(unAlumno) && not self.yaEstaInscripto(unAlumno) && not unAlumno.tieneAprobada(self) && unAlumno.estaInscriptoEnCarrera(self.carrera()))
 	}
 
 	method yaEstaInscripto(unAlumno) {
@@ -55,7 +65,7 @@ class Materia {
 	}
 
 	method hayCupo() {
-		return (cupo == alumnosInscriptos.size())
+		return (cupo > self.alumnosInscriptos().size())
 	}
 
 //	method tieneAprobadoAnioAnterior(unAlumno) {

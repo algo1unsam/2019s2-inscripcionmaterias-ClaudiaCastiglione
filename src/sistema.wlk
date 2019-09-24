@@ -11,6 +11,7 @@ object sistema {
 		var registro = new Registro(alumno = unAlumno, materia = unaMateria, nota = unaNota)
 		registros.add(registro)
 		unAlumno.materiasAprobadas().add(unaMateria)
+		unaMateria.alumnosInscriptos().add(unAlumno)
 	}
 	
 	method notaDelEstudianteEnLaMateria(unAlumno, unaMateria) {
