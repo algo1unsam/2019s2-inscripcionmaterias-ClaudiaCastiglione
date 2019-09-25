@@ -13,7 +13,7 @@ object requisitoCreditos {
 object requisitoCorrelativas {
 
 	method cumpleRequisito(unAlumno, unaMateria) {
-		return unaMateria.correlativas().all({ materia => unAlumno.materiasAprobadas().contains(materia) })
+		return unaMateria.correlativas().all({ materia => unAlumno.tieneAprobada(unaMateria) })
 	}
 
 }
