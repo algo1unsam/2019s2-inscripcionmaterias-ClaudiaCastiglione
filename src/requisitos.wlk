@@ -4,47 +4,31 @@ import materias.*
 
 object requisitoCreditos {
 
-	var property creditosNecesarios = 0
-
-	method cumpleRequisito(unAlumno) {
-		return self.tieneCreditosSuficientes(unAlumno)
-	}
-
-	method tieneCreditosSuficientes(unAlumno) {
-		return self.creditosNecesarios() == unAlumno.creditos()
+	method cumpleRequisito(unAlumno, unaMateria) {
+		return  unaMateria.creditosNecesarios() <= unAlumno.creditos()
 	}
 
 }
 
 object requisitoCorrelativas {
 
-	var property correlativas = []
-
-	method cumpleRequisito(unAlumno) {
-		return self.tieneAprobadasCorrelativas(unAlumno)
-	}
-
-	method tieneAprobadasCorrelativas(unAlumno) {
-		return correlativas.all({ materia => unAlumno.materiasAprobadas().contains(materia) })
+	method cumpleRequisito(unAlumno, unaMateria) {
+		return unaMateria.correlativas().all({ materia => unAlumno.materiasAprobadas().contains(materia) })
 	}
 
 }
 
 object requisitoAnioAnteriorAprobado {
 
-	method cumpleRequisito(unAlumno) {
-		return self.tieneAprobadoAnioAnterior(unAlumno)
-	}
-
-	method tieneAprobadoAnioAnterior(unAlumno) {
-		return unAlumno.tieneAprobadoAnioAnterior(anio - 1, carrera)
+	method cumpleRequisito(unAlumno,unaMateria) {
+		return unAlumno.tieneAprobadoAnioAnterior(unaMateria.anio(), unaMateria.carrera())
 	}
 
 }
 
 object requisitoNada {
 
-	method cumpleRequisito(unAlumno) {
+	method cumpleRequisito(unAlumno, unaMateria) {
 		return true
 	} 
 

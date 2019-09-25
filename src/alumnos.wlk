@@ -6,11 +6,11 @@ import registros.*
 
 class Alumno {
 
-	var carrerasInscripto = []
-	var materiasAprobadas = []
-	var materiasInscripto = []
-	var materiasCondicional = []
-	var materiasQuePuedeCursar = []
+	const property carrerasInscripto = []
+	const property materiasAprobadas = []
+	var property materiasInscripto = []
+	var property materiasCondicional = []
+	var property materiasQuePuedeCursar = []
 	var property creditos = 0
 
 	method puedeCursar(unaMateria) {
@@ -18,7 +18,7 @@ class Alumno {
 	}
 
 	method tieneAprobada(unaMateria) {
-		return materiasAprobadas.any({ materia => (materia == unaMateria) })
+		return materiasAprobadas.contains( unaMateria)
 	}
 
 	method estaInscripto(unaMateria) {
@@ -26,29 +26,13 @@ class Alumno {
 	}
 
 	method tieneAprobadoAnioAnterior(unAnio, carrera) {
-		var materiasDelAnio = materiasAprobadas.filter({ m => m.esDelAnio(unAnio) })
-		return (carrera.cantMateriasDelAnio(unAnio) == materiasDelAnio.size())
+		return carrera.materiasDelAnio(unAnio - 1).all({materia => self.tieneAprobada(materia)})
 	}
 
 	method estaInscriptoEnCarrera(unaCarrera) {
-		return carrerasInscripto.any({ carrera => (carrera == unaCarrera) })
+		return carrerasInscripto.contains(unaCarrera)
 	}
 	
-	method materiasCondicional() {
-		return materiasCondicional
-	}
-	
-	method materiasInscripto() {
-		return materiasInscripto
-	}
-	
-	method materiasAprobadas() {
-		return materiasAprobadas
-	}
-	
-	method carrerasInscripto() {
-		return carrerasInscripto
-	}
 
 	method listarMateriasQuePuedeCursar(carrera) {
 		if (self.estaInscriptoEnCarrera(carrera)) {

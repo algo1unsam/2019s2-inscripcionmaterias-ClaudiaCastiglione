@@ -6,30 +6,26 @@ import registros.*
 
 class Materia {
 
-	var property carrera
+	const property carrera
 	var property requisito = requisitoNada
-	var alumnosInscriptos = []
-	var alumnosEnListaEspera = []
-//	var property correlativas = []
-//	var property creditosNecesarios = 0
+	const property alumnosInscriptos = []
+	const property alumnosEnListaEspera = []
+	var property correlativas = []
+	var property creditosNecesarios = 0
 	var property anio
 	var property cupo
 
-	method alumnosInscriptos() {
-		return alumnosInscriptos
-	}
-	method alumnosEnListaEspera() {
-		return alumnosEnListaEspera
-	}
 	
 	method inscribir(unAlumno) {
-		if (self.sePuedeInscribir(unAlumno) && self.hayCupo()) {
-			self.alumnosInscriptos().add(unAlumno)
-			unAlumno.materiasInscripto().add(self)
-		}
-		if (self.sePuedeInscribir(unAlumno) && not self.hayCupo()) {
-			self.alumnosEnListaEspera().add(unAlumno)
-			unAlumno.materiasCondicional().add(self)
+		if (self.sePuedeInscribir(unAlumno)) {
+			if(self.hayCupo()){
+				self.alumnosInscriptos().add(unAlumno)
+				unAlumno.materiasInscripto().add(self)
+				}
+			else {
+				self.alumnosEnListaEspera().add(unAlumno)
+				unAlumno.materiasCondicional().add(self)
+			}
 		} 
 		else self.error("No se puede inscribir a este alumno en esta materia")
 	}
@@ -44,11 +40,11 @@ class Materia {
 	}
 
 	method sePuedeInscribir(unAlumno) {
-		return (requisito.cumpleRequisito(unAlumno) && not self.yaEstaInscripto(unAlumno) && not unAlumno.tieneAprobada(self) && unAlumno.estaInscriptoEnCarrera(self.carrera()))
+		return (requisito.cumpleRequisito(unAlumno, self) && not self.yaEstaInscripto(unAlumno) && not unAlumno.tieneAprobada(self) && unAlumno.estaInscriptoEnCarrera(self.carrera()))
 	}
 
 	method yaEstaInscripto(unAlumno) {
-		return alumnosInscriptos.any({ alumno => alumno == unAlumno })
+		return alumnosInscriptos.contains( unAlumno )
 	}
 
 //	method tieneCreditosSuficientes(unAlumno) {
