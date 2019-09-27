@@ -35,7 +35,10 @@ class Materia {
 			self.error("Este alumno no esta inscripto en esta materia")
 		} else {
 			alumnosInscriptos.remove(unAlumno)
-			if (self.hayAlumnosEnEspera()) alumnosInscriptos.add(alumnosEnListaEspera.first())
+			if (self.hayAlumnosEnEspera()) {
+				alumnosInscriptos.add(alumnosEnListaEspera.first())
+				alumnosEnListaEspera.remove(alumnosEnListaEspera.first())
+			}
 		}
 	}
 
@@ -47,9 +50,6 @@ class Materia {
 		return alumnosInscriptos.contains( unAlumno )
 	}
 
-//	method tieneCreditosSuficientes(unAlumno) {
-//		return self.creditosNecesarios() == unAlumno.creditos()
-//	}
 	method hayAlumnosEnEspera() = (alumnosEnListaEspera.size() > 0)
 
 	method esDelAnio(unAnio) {
@@ -64,11 +64,5 @@ class Materia {
 		return (cupo > self.alumnosInscriptos().size())
 	}
 
-//	method tieneAprobadoAnioAnterior(unAlumno) {
-//		return unAlumno.tieneAprobadoAnioAnterior(anio-1, carrera)
-//	}
-//	method tieneAprobadasCorrelativas(unAlumno) {
-//		return correlativas.all({materia => unAlumno.materiasAprobadas().contains(materia)}) 
-//	}
 }
 

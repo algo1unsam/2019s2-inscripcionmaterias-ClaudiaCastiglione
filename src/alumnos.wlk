@@ -18,11 +18,11 @@ class Alumno {
 	}
 
 	method tieneAprobada(unaMateria) {
-		return materiasAprobadas.contains( unaMateria)
+		return materiasAprobadas.contains(unaMateria)
 	}
 
 	method estaInscripto(unaMateria) {
-		return materiasInscripto.any({ materia => (materia == unaMateria) })
+		return materiasInscripto.contains(unaMateria) 
 	}
 
 	method tieneAprobadoAnioAnterior(unAnio, carrera) {
